@@ -26,14 +26,24 @@ def check_keydown_events(event, ship):
 	elif event.key == pygame.K_LEFT:
 		# 向左移动飞船
 		ship.moving_left = True
-
+	elif event.key == pygame.K_UP:
+		# 飞船向前移动
+		ship.moving_forward = True
+	elif event.key == pygame.K_DOWN:
+		# 飞船向后移动
+		ship.moving_back = True
 def check_keyup_events(event, ship):
 	"""响应松开按键"""
 	if event.key == pygame.K_RIGHT:
 		ship.moving_right = False
-
 	elif event.key == pygame.K_LEFT:
 		ship.moving_left = False
+	elif event.key == pygame.K_UP:
+		# 飞船向前移动
+		ship.moving_forward = False
+	elif event.key == pygame.K_DOWN:
+		# 飞船向后移动
+		ship.moving_back = False
 
 def update_screen(ai_settings,screen,ship):
 	"""更新屏幕上的图像，并切换到新屏幕"""
