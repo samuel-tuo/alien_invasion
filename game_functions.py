@@ -34,10 +34,16 @@ def check_keydown_events(event, ai_setting, screen, ship, bullets):
 		# 飞船向后移动
 		ship.moving_back = True
 	elif event.key == pygame.K_SPACE:
-		# 创建一颗子弹，并将其加入到bullets编组中
-		if len(bullets) < ai_setting.bullets_allowed:
-			new_bullet = Bullet(ai_setting, screen, ship)
-			bullets.add(new_bullet)
+		fire_bullets(ai_setting, screen, ship, bullets)
+
+
+def fire_bullets(ai_setting, screen, ship, bullets):
+	"""如果子弹数量没达到限制，就发射一颗"""
+	# 创建一颗子弹，并将其加入到bullets编组中
+	if len(bullets) < ai_setting.bullets_allowed:
+		new_bullet = Bullet(ai_setting, screen, ship)
+		bullets.add(new_bullet)
+
 def check_keyup_events(event, ship):
 	"""响应松开按键"""
 	if event.key == pygame.K_RIGHT:
