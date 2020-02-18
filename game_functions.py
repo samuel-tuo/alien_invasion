@@ -35,8 +35,9 @@ def check_keydown_events(event, ai_setting, screen, ship, bullets):
 		ship.moving_back = True
 	elif event.key == pygame.K_SPACE:
 		# 创建一颗子弹，并将其加入到bullets编组中
-		new_bullet = Bullet(ai_setting, screen, ship)
-		bullets.add(new_bullet)
+		if len(bullets) < ai_setting.bullets_allowed:
+			new_bullet = Bullet(ai_setting, screen, ship)
+			bullets.add(new_bullet)
 def check_keyup_events(event, ship):
 	"""响应松开按键"""
 	if event.key == pygame.K_RIGHT:
