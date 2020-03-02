@@ -61,12 +61,12 @@ def check_keyup_events(event, ship):
 		# 飞船向后移动
 		ship.moving_back = False
 
-def update_screen(ai_settings,screen,ship, alien, bullets):
+def update_screen(ai_settings,screen,ship, aliens, bullets):
 	"""更新屏幕上的图像，并切换到新屏幕"""
 	# 每次循环重绘屏幕
 	screen.fill(ai_settings.bg_color)
 	ship.blitme()  # 绘制飞船
-	alien.blitme() # 绘制外星人
+	aliens.draw(screen) # 绘制外星人
 	# 绘制子弹
 	for bullet in bullets.sprites():
 		bullet.draw_bullet()
@@ -87,4 +87,15 @@ def create_fleet(ai_settings, screen, aliens):
 	"""创建外星人群"""
 	# 创建一个外星人，并计算一行可容纳多少个外星人
 	# 外星人间距为外星人宽度
-	
+	alien = Alien(ai_settings, screen)
+	alien_width = alien.rect.width
+	available_space_x = ai_settings.screen_width - 2*alien_width
+	number_aliens_x = int(available_space_x / (2 * alien_width))
+
+	#创建第一行外星人
+	for alien_number in range(number_aliens_x):
+		# 创建一个外星人并将其加入当前行
+		alien =Alien(ai_settings, screen)
+		alien.x = alien_width + 2 * alien_width * alien_number
+		alien.rect.x = alien.x
+		aliens.add(alien)
