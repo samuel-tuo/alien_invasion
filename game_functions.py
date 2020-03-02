@@ -8,6 +8,7 @@
 import sys
 import pygame
 from bullet import Bullet
+from alien import Alien
 
 def check_events(ai_setting, screen, ship, bullets):
 	"""响应按键和鼠标"""
@@ -18,6 +19,7 @@ def check_events(ai_setting, screen, ship, bullets):
 			check_keydown_events(event, ai_setting, screen, ship, bullets)
 		elif event.type == pygame.KEYUP:
 			check_keyup_events(event, ship)
+
 
 def check_keydown_events(event, ai_setting, screen, ship, bullets):
 	"""响应按下按键"""
@@ -35,6 +37,8 @@ def check_keydown_events(event, ai_setting, screen, ship, bullets):
 		ship.moving_back = True
 	elif event.key == pygame.K_SPACE:
 		fire_bullets(ai_setting, screen, ship, bullets)
+	elif event.key == pygame.K_q:
+		sys.exit()
 
 
 def fire_bullets(ai_setting, screen, ship, bullets):
@@ -57,11 +61,12 @@ def check_keyup_events(event, ship):
 		# 飞船向后移动
 		ship.moving_back = False
 
-def update_screen(ai_settings,screen,ship, bullets):
+def update_screen(ai_settings,screen,ship, alien, bullets):
 	"""更新屏幕上的图像，并切换到新屏幕"""
 	# 每次循环重绘屏幕
 	screen.fill(ai_settings.bg_color)
 	ship.blitme()  # 绘制飞船
+	alien.blitme() # 绘制外星人
 	# 绘制子弹
 	for bullet in bullets.sprites():
 		bullet.draw_bullet()
@@ -77,3 +82,9 @@ def update_bullets(bullets):
 	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
+
+def create_fleet(ai_settings, screen, aliens):
+	"""创建外星人群"""
+	# 创建一个外星人，并计算一行可容纳多少个外星人
+	# 外星人间距为外星人宽度
+	
